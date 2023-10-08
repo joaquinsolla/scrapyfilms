@@ -19,7 +19,14 @@ class FilmsCrawlerSpider(CrawlSpider):
     
     def parse_item(self, response):
         yield {
-            "title": response.css('h1>span::text').get()
+            "title": response.css('h1>span::text').get(),
+            "release_date": response.css('div.fVkLRr>ul>li[data-testid="title-details-releasedate"]>div>ul>li>a::text').get(),
+            "brief_plot" : response.css('span.kJJttH::text').get(),
+            "popular_cast": response.css('a.fUguci::text').getall(),
+            "director": response.css('ul.iiDmgX>li>span:contains(Director)~div>ul li>a::text').getall(),
+            "scripters": response.css('ul.iiDmgX>li>span:contains(Writers)~div>ul li>a::text').getall(),
+            ## Incompleto:
+            "duration": response.css('ul.kdXikI li>a').get(),
         }
 
     def start_requests(self) -> Iterable[Request]:
