@@ -1,0 +1,63 @@
+.app {
+  font-family: Heletica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+main{
+  margin: 0;
+  padding: 0 0 50px 0;
+  text-align: center;
+  background-color: #f0f0f0;
+  min-height: calc(100vh - 50px - 225px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  height: 90px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+.filters {
+  /* Estilos para los filtros */
+}
+
+.search-bar {
+  margin: 20px 0;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  width: 33%;
+  min-width: 200px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+
+.movie-list {
+  /* Estilos para la lista de películas */
+}
+
+footer{
+  padding: 15px 0 15px 0;
+  height: 85px;
+  background: black;
+  color: white;
+  text-align: center;
+}
