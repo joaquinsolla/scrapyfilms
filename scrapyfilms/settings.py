@@ -7,7 +7,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "scrapyfilms"
+BOT_NAME = "no-scraper"
 
 SPIDER_MODULES = ["scrapyfilms.spiders"]
 NEWSPIDER_MODULE = "scrapyfilms.spiders"
@@ -93,5 +93,10 @@ CONCURRENT_REQUESTS = 1
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
-CLOSESPDIER_ITEMCOUNT = 5
 DUPEFILTER_CLASS = 'scrapyfilms.dupefilters.MyRFPDupeFilter'
+
+# Configura la cantidad de elementos que deseas recuperar
+CLOSESPIDER_ITEMCOUNT = 0
+
+# Configura el retraso entre las solicitudes (en segundos)
+DOWNLOAD_DELAY = 3
