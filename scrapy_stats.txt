@@ -1,0 +1,11 @@
+Scrapy stats:
+ 'downloader/request_bytes': 201160,
+ 'downloader/request_count': 252,
+ 'downloader/request_method_count/GET': 252,
+ 'downloader/response_bytes': 55976835,
+ 'downloader/response_count': 252,
+ 'downloader/response_status_count/200': 252,
+ 'dupefilter/filtered': 250,
+ 'elapsed_time_seconds': 948.498023,
+ 'feedexport/success_count/FileFeedStorage': 1,
+2023-10-13 18:00:51 [scrapy.core.engine] INFO: Spider closed (finished)

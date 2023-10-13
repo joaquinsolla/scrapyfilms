@@ -15,7 +15,7 @@ class FilmsCrawlerSpider(CrawlSpider):
     ]
 
     rules = [
-        Rule(LinkExtractor(allow='/title/tt'), callback='parse_item', follow=False)
+        Rule(LinkExtractor(allow='/title/tt'), callback='parse_item', follow=False),
     ]
     
     def parse_item(self, response):
@@ -31,7 +31,8 @@ class FilmsCrawlerSpider(CrawlSpider):
             "original_country": response.css('li[data-testid="title-details-origin"]>div>ul>li>a::text').get(),
             "original_language": response.css('li[data-testid="title-details-languages"]>div>ul>li>a::text').get(),
             "parental_guide": response.css('a[href*="parentalguide"]::text').get(),
-            "score": response.css('span.iZlgcd::text').get()
+            "score": response.css('span.iZlgcd::text').get(),
+            "poster_url": response.css('meta[property="og:image"]::attr(content)').get()
         }
 
     def transformar_fecha(self, fecha_str):

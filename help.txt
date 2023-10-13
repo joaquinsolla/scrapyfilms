@@ -1,0 +1,2 @@
+EJECUTAR SPIDER:
+scrapy crawl no-scraper -o films.json
