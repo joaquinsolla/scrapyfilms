@@ -6,31 +6,40 @@
 
 main{
   margin: 0;
-  padding: 0 0 50px 0;
+  padding: 0;
   text-align: center;
   background-color: #f0f0f0;
-  min-height: calc(100vh - 50px - 225px);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  min-height: calc(100vh - 8rem);
+  display: flex;
 }
 
 header {
-  background-color: #333;
+  background-color: black;
   color: white;
-  padding: 10px 0;
-  height: 90px;
+  height: 8rem;
 }
 
-h1 {
-  font-size: 36px;
+.banner{
+  height: 5.5rem;
+  max-width: 100%;
+  padding: 1.25rem 0 1.25rem 1rem;
 }
 
 .filters {
-  /* Estilos para los filtros */
+  width: 20%;
+  min-width: 12rem;
+  background: #c6c6c6;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.searchAndResults{
+  width: 80%;
+  text-align: left;
+  padding: 0 2rem;
 }
 
 .search-bar {
-  margin: 20px 0;
 }
 
 input {
@@ -41,23 +50,55 @@ input {
   min-width: 200px;
 }
 
-button {
+.mainButton {
   padding: 10px 20px;
-  background-color: #333;
+  margin: 0 0 0 0.33rem;
+  background-color: #e83a2a;
   color: white;
   border: none;
   cursor: pointer;
 }
 
+.activeFilters{
+  padding: 10px 0 10px 0;
+}
+
+.clearFiltersButton {
+  padding: 10px 0;
+  margin: 0 0 0 0.33rem;
+  background-color: transparent;
+  color: blue;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 
 .movie-list {
-  /* Estilos para la lista de películas */
+
 }
 
 footer{
-  padding: 15px 0 15px 0;
-  height: 85px;
+  padding: 2rem 0 2rem 0;
+  height: 5rem;
   background: black;
   color: white;
   text-align: center;
 }
+
+.flexItem{
+  display: flex;
+}
+
+.pc80{
+  width: 66%;
+}
+
+.pc20{
+  width: 33%;
+}
+
+.right{
+  text-align: right;
+}
+
