@@ -1,6 +1,4 @@
-from typing import Iterable
 import scrapy
-from scrapy.http import Request
 from datetime import datetime
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -36,35 +34,38 @@ class FilmsCrawlerSpider(CrawlSpider):
         }
 
     def transformar_fecha(self, fecha_str):
-        # Define el formato original de la fecha
-        formato_original = "%B %d, %Y (United States)"
-
         try:
+            date_without_country = fecha_str.split(" (")[0]
+
+            # Define el formato original de la fecha
+            formato_original = "%B %d, %Y"
+
             # Intenta analizar la fecha en el formato original
-            fecha_obj = datetime.strptime(fecha_str, formato_original)
+            fecha_obj = datetime.strptime(date_without_country, formato_original)
 
             # Formatea la fecha en el formato "dd/mm/aaaa"
             fecha_formateada = fecha_obj.strftime("%d/%m/%Y")
 
             return fecha_formateada
         except ValueError:
-            return "Formato de fecha no válido"
+            return "NA"
 
 
     def runtime_calculator(self, duration_text_list):
+        try:
+            hours = int(0)
 
-        hours = int(0)
+            if len(duration_text_list) == 7:
+                hours = int(duration_text_list[0])
+                minutes = int(duration_text_list[4])
+            else:
+                minutes = int(duration_text_list[0])
 
-        if len(duration_text_list) == 7:
-            hours = int(duration_text_list[0])
-            minutes = int(duration_text_list[4])
-        else:
-            minutes = int(duration_text_list[0])
+            hora_formateada = "{:02d}".format(hours)
+            minuto_formateado = "{:02d}".format(minutes)
 
-        hora_formateada = "{:02d}".format(hours)
-        minuto_formateado = "{:02d}".format(minutes)
+            hora_completa = hora_formateada + ":" + minuto_formateado
 
-        hora_completa = hora_formateada + ":" + minuto_formateado
-
-        return hora_completa
-
+            return hora_completa
+        except ValueError:
+            return "NA"
