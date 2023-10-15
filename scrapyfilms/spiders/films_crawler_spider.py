@@ -15,8 +15,15 @@ class FilmsCrawlerSpider(CrawlSpider):
     rules = [
         Rule(LinkExtractor(allow='/title/tt'), callback='parse_item', follow=False),
     ]
-    
+
+    item_count = 1
+
     def parse_item(self, response):
+
+        # PARA OBTENER {"create": {"id": X}}
+        yield {"create": {"id": self.item_count}}
+        self.item_count += 1
+
         yield {
             "title": response.css('h1>span::text').get(),
             "release_date": self.transformar_fecha(response.css('div.fVkLRr>ul>li[data-testid="title-details-releasedate"]>div>ul>li>a::text').get()),
