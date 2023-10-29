@@ -3,8 +3,8 @@
 # python .\json_to_postman_formatter.py
 
 def eliminar_comas_entre_objetos():
-    input_file_path = '../dumps/films-create.json'
-    output_file_path = '../dumps/films-create-FORMATTED.json'
+    input_file_path = '../dumps/films.json'
+    output_file_path = '../dumps/films-FORMATTED.json'
 
     try:
         with open(input_file_path, 'r', encoding='utf-8') as file_in:

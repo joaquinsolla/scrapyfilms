@@ -15,8 +15,8 @@ import {
     ReactiveList,
     DateRange,
     RangeInput,
-    RatingsFilter,
-    MultiList
+    MultiList,
+    RatingsFilter
 } from "@appbaseio/reactivesearch";
 
 import createDOMPurify from 'dompurify';
@@ -60,11 +60,9 @@ const App = () => (
     <ReactiveBase
         app="scrapyfilms_index"
         url="http://localhost:9200"
-        analytics={false}
-        searchStateHeader
     >
         <Row style={{padding: 20}}>
-            <Col span={5}>
+            <Col id={"filters"} span={5}>
                 <Card>
                     <div style={{marginBottom: 20}}>
                         <Banner />
@@ -119,11 +117,11 @@ const App = () => (
                         dataField="score"
                         title="Valoración"
                         data={[
-                            { start: 5, end: 5, label: 'Sobresaliente' },
-                            { start: 4, end: 5, label: 'Notable' },
-                            { start: 3, end: 5, label: 'Buena' },
-                            { start: 2, end: 5, label: 'Mediocre' },
-                            { start: 1, end: 5, label: 'Mala' },
+                            {"start": 5, "end": 5, "label": "Sobresaliente"},
+                            {"start": 4, "end": 5, "label": "Notable"},
+                            {"start": 3, "end": 4, "label": "Buena"},
+                            {"start": 2, "end": 3, "label": "Mediocre"},
+                            {"start": 1, "end": 2, "label": "Mala"}
                         ]}
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
@@ -171,7 +169,7 @@ const App = () => (
 
                 </Card>
             </Col>
-            <Col span={10}>
+            <Col id={"searchbar_and_result"} span={10}>
                 <DataSearch
                     componentId="Search"
                     dataField={['title']}
@@ -181,13 +179,17 @@ const App = () => (
                     placeholder="Buscar películas"
                     style={{
                         marginTop: 5,
-                        marginBottom: 20,
                         marginLeft: 10,
                     }}
                     title="IMDb Top 250"
                 />
 
-                <SelectedFilters/>
+                <SelectedFilters
+                    style={{
+                        marginLeft: 10,
+                        marginBottom: 20,
+                    }}
+                />
 
                 <div id="result">
                     <ReactiveList
