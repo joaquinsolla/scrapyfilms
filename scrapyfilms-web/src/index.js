@@ -37,20 +37,110 @@ function getNestedValue(obj, path) {
     return nestedValue;
 }
 
-// FUTURE USAGE
-function renderFilm(res, triggerClickAnalytics) {
-    let {title} = {
-        "title": "title", "showRest": false
+function RenderFilm(res) {
+
+    let {title, poster_url, score, release_date, brief_plot, director, popular_cast, scriptwriter, duration, production,
+        original_country, original_language, parental_guide} = {
+        "title": "title", "poster_url": "poster_url", "score": "score", "release_date": "release_date", "brief_plot": "brief_plot",
+        "director": "director", "popular_cast": "popular_cast", "scriptwriter": "scriptwriter",  "duration": "duration",
+        "production": "production", "original_country": "original_country", "original_language": "original_language",
+        "parental_guide": "parental_guide","showRest": false
     };
     title = getNestedValue(res, title)
+    poster_url = getNestedValue(res, poster_url)
+    score = getNestedValue(res, score)
+    release_date = getNestedValue(res, release_date)
+    brief_plot = getNestedValue(res, brief_plot)
+    director = getNestedValue(res, director)
+    popular_cast = getNestedValue(res, popular_cast)
+    scriptwriter = getNestedValue(res, scriptwriter)
+    duration = getNestedValue(res, duration)
+    production = getNestedValue(res, production)
+    original_country = getNestedValue(res, original_country)
+    original_language = getNestedValue(res, original_language)
+    parental_guide = getNestedValue(res, parental_guide)
+
+    if (director === "[]") {
+        director = "Sin información"
+    } else {
+        director = director.replace(/"/g, ' ').slice(1, -1).split(' ,');
+    }
+    if (scriptwriter === "[]") {
+        scriptwriter = "Sin información"
+    } else {
+        scriptwriter = scriptwriter.replace(/"/g, ' ').slice(1, -1).split(' ,');
+    }
+    if (popular_cast === "[]") {
+        popular_cast = "Sin información"
+    } else {
+        popular_cast = popular_cast.replace(/"/g, ' ').slice(1, -1).split(' ,');
+    }
+    if (production === "[]") {
+        production = "Sin información"
+    } else {
+        production = production.replace(/"/g, ' ').slice(1, -1).split(' ,');
+    }
+
+    function toggleDetails() {
+        const detailsDiv = document.getElementById("details_"+title);
+        const detailsButton = document.getElementById("detailsButton_"+title);
+
+        if (detailsDiv.style.display === "none" || detailsDiv.style.display === "") {
+            detailsDiv.style.display = "block";
+            detailsButton.innerHTML = "&nbsp;Ocultar"
+        } else {
+            detailsDiv.style.display = "none";
+            detailsButton.innerHTML = "&nbsp;Mostrar"
+        }
+    }
 
     return (
-        <Row onClick={triggerClickAnalytics} type="flex" gutter={16} key={res._id}
+        <Row type="flex" gutter={16} key={res._id}
              style={{margin: '20px auto', borderBottom: '1px solid #ededed'}}>
-
-            <Col span={14}>
-                <p style={{fontSize: '1em'}}
+            <Col>
+                {poster_url && <img width={150} src={poster_url} alt={title}/>}
+            </Col>
+            <Col span={17}>
+                <p style={{fontSize: '1.2em', fontWeight: 'bold'}}
                    dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(title)}}/>
+                <p style={{fontSize: '1em'}}
+                   dangerouslySetInnerHTML={{__html: "Lanzamiento: " + DOMPurify.sanitize(release_date) + " (" + DOMPurify.sanitize(original_country) + ")"}}/>
+                <p style={{fontSize: '1em'}}
+                   dangerouslySetInnerHTML={{__html: "Duración: " + DOMPurify.sanitize(duration) + " minutos"}}/>
+                <p style={{fontSize: '1em', fontWeight: 'bold'}}>
+                    Argumento
+                </p>
+                <p style={{fontSize: '0.8em'}}
+                   dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(brief_plot)}}/>
+                <p style={{fontSize: '1em', fontWeight: 'bold', userSelect: 'none'}}>Detalles técnicos <a id={"detailsButton_"+title} onClick={toggleDetails} style={{fontSize: '0.8em', fontWeight: 'normal'}}>&nbsp;Mostrar</a></p>
+                <div id={"details_" + title} style={{ display: "none" }}>
+                    <p style={{fontSize: '0.8em'}}
+                       dangerouslySetInnerHTML={{__html: "Dirección: " + DOMPurify.sanitize(director)}}/>
+                    <p style={{fontSize: '0.8em'}}
+                       dangerouslySetInnerHTML={{__html: "Guionistas: " + DOMPurify.sanitize(scriptwriter)}}/>
+                    <p style={{fontSize: '0.8em'}}
+                       dangerouslySetInnerHTML={{__html: "Reparto principal: " + DOMPurify.sanitize(popular_cast)}}/>
+                    <p style={{fontSize: '0.8em'}}
+                       dangerouslySetInnerHTML={{__html: "Producción: " + DOMPurify.sanitize(production)}}/>
+                    <p style={{fontSize: '0.8em'}}
+                       dangerouslySetInnerHTML={{__html: "Idioma original: " + DOMPurify.sanitize(original_language)}}/>
+                </div>
+            </Col>
+            <Col span={3}>
+                <div style={{textAlign: "right"}}>
+                    <p style={{fontSize: '1em', fontWeight: 'bold'}}>
+                        Valoración
+                    </p>
+                    <p style={{fontSize: '2em'}}
+                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(score + "/5")}}/>
+                </div>
+                <div style={{textAlign: "right"}}>
+                    <p style={{fontSize: '1em', fontWeight: 'bold'}}>
+                        Parental
+                    </p>
+                    <p style={{fontSize: '1.5em'}}
+                       dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(parental_guide)}}/>
+                </div>
             </Col>
         </Row>
     );
@@ -71,7 +161,7 @@ const App = () => (
                     <DateRange
                         componentId="ReleaseDate"
                         dataField="release_date"
-                        title="Fecha de lanzamiento (aaaa-mm-dd)"
+                        title="Fecha de lanzamiento (aaaa-mm-dd) NO FUNCIONA"
                         placeholder={{
                             start: 'Inicio intervalo',
                             end: 'Fin intervalo'
@@ -117,11 +207,11 @@ const App = () => (
                         dataField="score"
                         title="Valoración"
                         data={[
-                            {"start": 5, "end": 5, "label": "Sobresaliente"},
-                            {"start": 4, "end": 5, "label": "Notable"},
-                            {"start": 3, "end": 4, "label": "Buena"},
-                            {"start": 2, "end": 3, "label": "Mediocre"},
-                            {"start": 1, "end": 2, "label": "Mala"}
+                            {"start": 4, "end": 5, "label": "Sobresaliente"},
+                            {"start": 3, "end": 4, "label": "Notable"},
+                            {"start": 2, "end": 3, "label": "Buena"},
+                            {"start": 1, "end": 2, "label": "Mediocre"},
+                            {"start": 0, "end": 1, "label": "Mala"}
                         ]}
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
@@ -141,6 +231,7 @@ const App = () => (
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalLanguage', 'ParentalGuide']
                         }}
+                        showCheckbox={true}
                     />
 
                     <MultiList
@@ -153,6 +244,7 @@ const App = () => (
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'ParentalGuide']
                         }}
+                        showCheckbox={true}
                     />
 
                     <MultiList
@@ -165,17 +257,18 @@ const App = () => (
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage']
                         }}
+                        showCheckbox={true}
                     />
 
                 </Card>
             </Col>
-            <Col id={"searchbar_and_result"} span={10}>
+            <Col id={"searchbar_and_result"} span={14}>
                 <DataSearch
                     componentId="Search"
-                    dataField={['title']}
-                    fieldWeights={[5]}
+                    dataField={['title', 'director', 'popular_cast']}
+                    fieldWeights={[5, 1, 2]}
                     fuzziness={1}
-                    highlightField={['title']}
+                    highlightField={['title', 'director', 'popular_cast']}
                     placeholder="Buscar películas"
                     style={{
                         marginTop: 5,
@@ -196,11 +289,10 @@ const App = () => (
                         componentId="result"
                         dataField="_score"
                         pagination={true}
-                        loader="Cargando..."
                         react={{
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
-                        renderItem={(res) => <div>{res.title}</div>}
+                        renderItem={RenderFilm}
                         size={10}
                         style={{
                             marginTop: 20,
@@ -220,7 +312,7 @@ const App = () => (
                             {
                                 dataField: "title",
                                 sortBy: "asc",
-                                label: "Ordenar por título \u00A0",
+                                label: "Ordenar por título NO FUNCIONA \u00A0",
                             },
                             {
                                 dataField: "release_date",
@@ -231,6 +323,16 @@ const App = () => (
                                 dataField: "release_date",
                                 sortBy: "asc",
                                 label: "Ordenar por fecha de lanzamiento (Más viejas a más nuevas) \u00A0",
+                            },
+                            {
+                                dataField: "duration",
+                                sortBy: "desc",
+                                label: "Ordenar por duración (Más largas a más cortas) \u00A0",
+                            },
+                            {
+                                dataField: "duration",
+                                sortBy: "asc",
+                                label: "Ordenar por duración (Más cortas a más largas) \u00A0",
                             },
                         ]}
                     />
