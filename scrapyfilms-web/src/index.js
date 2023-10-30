@@ -161,7 +161,7 @@ const App = () => (
                     <DateRange
                         componentId="ReleaseDate"
                         dataField="release_date"
-                        title="Fecha de lanzamiento (aaaa-mm-dd) NO FUNCIONA"
+                        title="Fecha de lanzamiento (aaaa-mm-dd)"
                         placeholder={{
                             start: 'Inicio intervalo',
                             end: 'Fin intervalo'
@@ -310,9 +310,9 @@ const App = () => (
                                 label: "Ordenar por valoración (Menor a mayor) \u00A0",
                             },
                             {
-                                dataField: "title",
+                                dataField: "title_keyword",
                                 sortBy: "asc",
-                                label: "Ordenar por título NO FUNCIONA \u00A0",
+                                label: "Ordenar por título \u00A0",
                             },
                             {
                                 dataField: "release_date",

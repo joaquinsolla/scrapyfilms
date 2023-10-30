@@ -1,2 +1,3 @@
-EJECUTAR SPIDER:
-scrapy crawl no-scraper -o films.json
+scrapy crawl no-scraper -o dumps/films.json
+cd scrapyfilms
+python json_to_postman_formatter.py

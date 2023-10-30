@@ -50,8 +50,8 @@ class FilmsCrawlerSpider(CrawlSpider):
             # Intenta analizar la fecha en el formato original
             fecha_obj = datetime.strptime(date_without_country, formato_original)
 
-            # Formatea la fecha en el formato "dd/mm/aaaa"
-            fecha_formateada = fecha_obj.strftime("%d/%m/%Y")
+            # Formatea la fecha en el formato "yyyy-MM-dd"
+            fecha_formateada = fecha_obj.strftime("%Y-%m-%d")
 
             return fecha_formateada
         except ValueError:
@@ -60,14 +60,19 @@ class FilmsCrawlerSpider(CrawlSpider):
 
     def duration_calculation(self, duration_text_list):
         try:
-
             if len(duration_text_list) == 7:
                 hours = int(duration_text_list[0])
                 minutes = int(duration_text_list[4])
 
                 duration = (60 * hours) + minutes
             else:
-                duration = int(duration_text_list[0])
+                if len(duration_text_list) == 3:
+                    if duration_text_list[2] == "hour" or duration_text_list[2] == "hours":
+                        duration = int(duration_text_list[0])*60
+                    else:
+                        duration = int(duration_text_list[0])
+                else:
+                    return "NA"
 
             return duration
         except ValueError:
@@ -75,9 +80,7 @@ class FilmsCrawlerSpider(CrawlSpider):
 
     def score_calculation(self, score_text):
         try:
-
             score = float(score_text)/2
-
             return score
         except ValueError:
             return "NA"
