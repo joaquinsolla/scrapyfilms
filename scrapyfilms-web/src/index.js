@@ -170,9 +170,7 @@ const App = () => (
                         numberOfMonths={1}
                         queryFormat="date"
                         showClear={true}
-                        showFilter={false}
                         filterLabel="Date"
-                        URLParams={false}
                         react={{
                             and: ['Search', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
@@ -223,7 +221,7 @@ const App = () => (
 
                     <MultiList
                         componentId="OriginalCountry"
-                        dataField="original_country.raw"
+                        dataField="original_country"
                         style={{
                             marginBottom: 20
                         }}
@@ -232,11 +230,12 @@ const App = () => (
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalLanguage', 'ParentalGuide']
                         }}
                         showCheckbox={true}
+                        showSearch={false}
                     />
 
                     <MultiList
                         componentId="OriginalLanguage"
-                        dataField="original_language.raw"
+                        dataField="original_language"
                         style={{
                             marginBottom: 20
                         }}
@@ -245,11 +244,12 @@ const App = () => (
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'ParentalGuide']
                         }}
                         showCheckbox={true}
+                        showSearch={false}
                     />
 
                     <MultiList
                         componentId="ParentalGuide"
-                        dataField="parental_guide.raw"
+                        dataField="parental_guide"
                         style={{
                             marginBottom: 20
                         }}
@@ -258,6 +258,7 @@ const App = () => (
                             and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage']
                         }}
                         showCheckbox={true}
+                        showSearch={false}
                     />
 
                 </Card>
