@@ -112,6 +112,7 @@ function RenderFilm(res) {
                 </p>
                 <p style={{fontSize: '0.8em'}}
                    dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(brief_plot)}}/>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <p style={{fontSize: '1em', fontWeight: 'bold', userSelect: 'none'}}>Detalles técnicos <a id={"detailsButton_"+title} onClick={toggleDetails} style={{fontSize: '0.8em', fontWeight: 'normal'}}>&nbsp;Mostrar</a></p>
                 <div id={"details_" + title} style={{ display: "none" }}>
                     <p style={{fontSize: '0.8em'}}
