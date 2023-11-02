@@ -40,11 +40,11 @@ function getNestedValue(obj, path) {
 function RenderFilm(res) {
 
     let {title, poster_url, score, release_date, brief_plot, director, popular_cast, scriptwriter, duration, production,
-        original_country, original_language, parental_guide} = {
+        original_country, original_language, parental_guide, genre/*, _score*/} = {
         "title": "title", "poster_url": "poster_url", "score": "score", "release_date": "release_date", "brief_plot": "brief_plot",
         "director": "director", "popular_cast": "popular_cast", "scriptwriter": "scriptwriter",  "duration": "duration",
         "production": "production", "original_country": "original_country", "original_language": "original_language",
-        "parental_guide": "parental_guide","showRest": false
+        "parental_guide": "parental_guide", "genre": "genre", /*"_score": "_score", */"showRest": false
     };
     title = getNestedValue(res, title)
     poster_url = getNestedValue(res, poster_url)
@@ -59,6 +59,8 @@ function RenderFilm(res) {
     original_country = getNestedValue(res, original_country)
     original_language = getNestedValue(res, original_language)
     parental_guide = getNestedValue(res, parental_guide)
+    genre = getNestedValue(res, genre)
+    // _score = getNestedValue(res, _score)
 
     if (director === "[]") {
         director = "Sin información"
@@ -107,6 +109,8 @@ function RenderFilm(res) {
                    dangerouslySetInnerHTML={{__html: "Lanzamiento: " + DOMPurify.sanitize(release_date) + " (" + DOMPurify.sanitize(original_country) + ")"}}/>
                 <p style={{fontSize: '1em'}}
                    dangerouslySetInnerHTML={{__html: "Duración: " + DOMPurify.sanitize(duration) + " minutos"}}/>
+                <p style={{fontSize: '1em'}}
+                   dangerouslySetInnerHTML={{__html: "Género: " + DOMPurify.sanitize(genre)}}/>
                 <p style={{fontSize: '1em', fontWeight: 'bold'}}>
                     Argumento
                 </p>
@@ -173,7 +177,7 @@ const App = () => (
                         showClear={true}
                         filterLabel="Date"
                         react={{
-                            and: ['Search', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
+                            and: ['Search', 'Duration', 'Score', 'Genre', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
                         style={{
                             marginBottom: 20
@@ -197,7 +201,7 @@ const App = () => (
                             "end": 240
                         }}
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
+                            and: ['Search', 'ReleaseDate', 'Score', 'Genre', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
                     />
 
@@ -213,11 +217,25 @@ const App = () => (
                             {"start": 0, "end": 1, "label": "Mala"}
                         ]}
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Duration', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Genre', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
                         style={{
                             marginBottom: 20
                         }}
+                    />
+
+                    <MultiList
+                        componentId="Genre"
+                        dataField="genre"
+                        style={{
+                            marginBottom: 20
+                        }}
+                        title="Género"
+                        react={{
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
+                        }}
+                        showCheckbox={true}
+                        showSearch={false}
                     />
 
                     <MultiList
@@ -228,7 +246,7 @@ const App = () => (
                         }}
                         title="País de origen"
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalLanguage', 'ParentalGuide']
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'Genre', 'OriginalLanguage', 'ParentalGuide']
                         }}
                         showCheckbox={true}
                         showSearch={false}
@@ -242,7 +260,7 @@ const App = () => (
                         }}
                         title="Idioma original"
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'ParentalGuide']
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'Genre', 'OriginalCountry', 'ParentalGuide']
                         }}
                         showCheckbox={true}
                         showSearch={false}
@@ -256,7 +274,7 @@ const App = () => (
                         }}
                         title="Guía parental"
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage']
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'Genre', 'OriginalCountry', 'OriginalLanguage']
                         }}
                         showCheckbox={true}
                         showSearch={false}
@@ -268,7 +286,7 @@ const App = () => (
                 <DataSearch
                     componentId="Search"
                     dataField={['title', 'director', 'popular_cast']}
-                    fieldWeights={[5, 1, 2]}
+                    fieldWeights={[9, 1, 2]}
                     fuzziness={1}
                     highlightField={['title', 'director', 'popular_cast']}
                     placeholder="Buscar películas"
@@ -276,7 +294,7 @@ const App = () => (
                         marginTop: 5,
                         marginLeft: 10,
                     }}
-                    title="IMDb Top 250"
+                    title="Films by IMDb"
                 />
 
                 <SelectedFilters
@@ -292,7 +310,7 @@ const App = () => (
                         dataField="_score"
                         pagination={true}
                         react={{
-                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
+                            and: ['Search', 'ReleaseDate', 'Duration', 'Score', 'Genre', 'OriginalCountry', 'OriginalLanguage', 'ParentalGuide']
                         }}
                         renderItem={RenderFilm}
                         size={10}
@@ -301,6 +319,11 @@ const App = () => (
                             marginLeft: 15
                         }}
                         sortOptions={[
+                            {
+                                dataField: "_score",
+                                sortBy: "desc",
+                                label: "Ordenar por relevancia \u00A0",
+                            },
                             {
                                 dataField: "score",
                                 sortBy: "desc",
